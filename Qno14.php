@@ -28,7 +28,7 @@ try {
         <select name="country_id" id="country_id">
             <option value="">Select Country</option>
             <?php foreach($countries as $countrie){ ?>
-                <option value="<?php echo $countrie['ID'] ?>"><?php echo $countiie['Title'] ?></option>
+                <option value="<?php echo $countrie['ID'] ?>"><?php echo $countrie['Title'] ?></option>
             <?php } ?>
            
         </select>
@@ -43,9 +43,9 @@ try {
 
     <script>
          let counObj = document.getElementById('country_id');
-        semObj.addEventListener('change',function() {
+        counObj.addEventListener('change',function() {
             let data= new FormData();
-            data.append('country_id',semObj.value);
+            data.append('country_id',counObj.value);
             let xhttp = new XMLHttpRequest();
             xhttp.open('POST','connection.php',true);
             xhttp.send(data);

@@ -1,16 +1,30 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userid = $_POST['userid'] ?? '';
-    $password = $_POST['password'] ?? '';
+// Start session
+session_start();
 
-    // Sample hardcoded user credentials for validation
-    $validUser = 'user1';
-    $validPass = 'password123';
+// Example hardcoded credentials for demonstration purposes
+$valid_userid = 'testuser';
+$valid_password = 'password123';
 
-    if ($userid === $validUser && $password === $validPass) {
-        echo 'success';
-    } else {
-        echo 'failure';
-    }
+// Retrieve submitted data
+$userid = $_POST['userid'] ?? '';
+$password = $_POST['password'] ?? '';
+
+// Initialize response array
+$response = [
+    'status' => 'error',
+    'message' => 'Invalid User ID or Password. Please try again.'
+];
+
+// Validate credentials
+if ($userid === $valid_userid && $password === $valid_password) {
+    // Successful login
+    $_SESSION['userid'] = $userid; // Start session for the user
+    $response['status'] = 'success';
+    $response['message'] = "Welcome, $userid!";
 }
+
+// Return JSON response
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>

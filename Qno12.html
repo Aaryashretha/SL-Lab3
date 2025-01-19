@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Live API Example</title>
+  </head>
+  <body>
+    <h1>Ajax Live API Example</h1>
+    <button id="get_data">Get Data</button>
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Poster</th>
+          <th>Year</th>
+          <th>Genre</th>
+          <th>Rating</th>
+          <th>Director</th>
+          <th>Country</th>
+          <th>Language</th>
+          <th>Actors</th>
+        </tr>
+      </thead>
+      <tbody id="movie">
+        <tr>
+          <td colspan="10">No Data</td>
+        </tr>
+      </tbody>
+    </table>
+    <p id="content">
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quaerat
+      asperiores est quisquam eum aut, soluta fugit, cupiditate odit error
+      sapiente quidem, fuga sint aperiam dolores nisi assumenda eveniet corrupti
+      vitae.
+    </p>
+
+    <script>
+      async function getDataFromServer() {
+  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+  const targetUrl = "https://freetestapi.com/api/v1/movies";
+  const apiUrl = proxyUrl + targetUrl;
+
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+    const data = await response.json();
+    let tbody = document.getElementById("movie");
+    tbody.innerHTML = ""; // Clear existing rows
+
+    data.forEach(movie => {
+      let row = `
+        <tr>
+          <td>${movie.id}</td>
+          <td>${movie.title}</td>
+          <td><img src="${movie.poster}" alt="Poster" style="width:100px;"></td>
+          <td>${movie.year}</td>
+          <td>${movie.genre}</td>
+          <td>${movie.rating}</td>
+          <td>${movie.director}</td>
+          <td>${movie.country}</td>
+          <td>${movie.language}</td>
+          <td>${movie.actors}</td>
+        </tr>`;
+      tbody.insertAdjacentHTML("beforeend", row);
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    document.getElementById("movie").innerHTML =
+      "<tr><td colspan='10'>Failed to fetch data.</td></tr>";
+  }
+}
+
+
+    </script>
+  </body>
+</html>
